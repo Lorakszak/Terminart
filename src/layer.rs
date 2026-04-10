@@ -87,6 +87,11 @@ impl Layer {
     }
 
     /// Composite with a pixel offset (for parallax scrolling).
+    ///
+    /// Iterates the full layer dimensions, not clamped to the screen: layers
+    /// wider than the screen need their right-side content drawn when parallax
+    /// shifts them left, otherwise the revealed area comes out blank. The
+    /// inner bounds check discards off-screen cells.
     pub fn composite_offset(
         &self,
         buf: &mut ratatui::buffer::Buffer,
@@ -94,8 +99,8 @@ impl Layer {
         offset_x: i32,
         offset_y: i32,
     ) {
-        for y in 0..self.height.min(area.height) {
-            for x in 0..self.width.min(area.width) {
+        for y in 0..self.height {
+            for x in 0..self.width {
                 if let Some(cell) = self.get(x, y) {
                     let bx = area.x as i32 + x as i32 + offset_x;
                     let by = area.y as i32 + y as i32 + offset_y;
