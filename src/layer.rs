@@ -54,6 +54,11 @@ impl Layer {
         colors: Option<&ColorMap>,
     ) {
         let art = art.strip_suffix('\n').unwrap_or(art);
+        // Upper bound as i32 so the u16 cast below cannot silently wrap on
+        // absurd positions from user-defined scenes (e.g. x = 70000 would
+        // wrap to 4464 and draw inside the visible area).
+        let w = self.width as i32;
+        let h = self.height as i32;
         for (row, line) in art.lines().enumerate() {
             for (col, ch) in line.chars().enumerate() {
                 if ch == ' ' {
@@ -61,7 +66,7 @@ impl Layer {
                 }
                 let px = x + col as i32;
                 let py = y + row as i32;
-                if px >= 0 && py >= 0 {
+                if px >= 0 && py >= 0 && px < w && py < h {
                     let style = match colors {
                         Some(cm) => match cm.get_color(ch, row, col) {
                             Some(Color::Rgb(r, g, b)) => base_style.fg(Color::Rgb(r, g, b)),

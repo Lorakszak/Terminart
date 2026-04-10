@@ -60,6 +60,12 @@ fn run_inner<S: Scene>(fps: u32, cfg: SceneConfig) -> Result<(), Box<dyn std::er
     )
 }
 
+/// Maximum per-tick delta (seconds). Caps the simulation step after a stall
+/// (hibernation, SIGSTOP, debugger pause) so behaviors with `while timer >=
+/// interval` spawn loops (e.g. Weather) cannot discharge thousands of events
+/// in a single tick.
+const MAX_DT: f64 = 0.25;
+
 fn main_loop<S: Scene>(
     terminal: &mut Terminal<CrosstermBackend<io::Stderr>>,
     scene: &mut S,
@@ -69,7 +75,7 @@ fn main_loop<S: Scene>(
 ) -> Result<(), Box<dyn std::error::Error>> {
     loop {
         let now = Instant::now();
-        let dt = now.duration_since(*last_tick).as_secs_f64();
+        let dt = now.duration_since(*last_tick).as_secs_f64().min(MAX_DT);
         *last_tick = now;
 
         scene.tick(dt, rng);
