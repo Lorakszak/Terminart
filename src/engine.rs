@@ -11,9 +11,9 @@ use rand::rngs::SmallRng;
 use rand::SeedableRng;
 use ratatui::{backend::CrosstermBackend, Terminal};
 
-use crate::scene::Scene;
+use crate::scene::{Scene, SceneConfig};
 
-pub fn run<S: Scene>(fps: u32) -> Result<(), Box<dyn std::error::Error>> {
+pub fn run<S: Scene>(fps: u32, cfg: SceneConfig) -> Result<(), Box<dyn std::error::Error>> {
     // Install panic hook to restore terminal on panic
     let original_hook = std::panic::take_hook();
     std::panic::set_hook(Box::new(move |panic_info| {
@@ -31,7 +31,7 @@ pub fn run<S: Scene>(fps: u32) -> Result<(), Box<dyn std::error::Error>> {
 
     let mut rng = SmallRng::from_os_rng();
     let size = terminal.size()?;
-    let mut scene = S::setup(size.width, size.height, &mut rng);
+    let mut scene = S::setup(size.width, size.height, &cfg, &mut rng);
 
     let frame_duration = Duration::from_secs_f64(1.0 / fps as f64);
     let mut last_tick = Instant::now();
