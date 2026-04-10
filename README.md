@@ -108,28 +108,10 @@ terminart
 |-------|-------------|
 | `cityscape` | Rooftop view of a city skyline at night |
 
-## Roadmap
+## TODO
 
-### ~~Phase 1: Art loading from external files~~ (done)
-Art loaded from `.txt` files in `assets/`, embedded via `include_str!` at compile time. User overrides supported from `~/.config/terminart/scenes/`.
-
-### ~~Phase 2: Color and shading improvements~~ (done)
-Color infrastructure: per-character coloring via `.colors` (char-based palette) and `.colormap` (positional grid) files. Color utilities (lerp, tint, fade). Post-compositing buffer effects (radial glow, vertical fade).
-
-### ~~Phase 3: Rich scenes~~ (in progress)
-Cityscape scene complete with procedural buildings, parallax skyline, window blinking, clouds, planes, helicopters, birds, cars, and person at table. More scenes planned.
-
-### ~~Phase 4: Dynamic entity behaviors~~ (done)
-Wind, parallax scrolling, day/night cycle, weather systems (rain, snow, fog). Art mirroring for direction-aware entities.
-
-### Phase 5: User-defined scenes
-Config format (TOML/YAML) for users to define their own scenes without writing Rust. Custom art, entities, behaviors, and effects.
-
-### Phase 6: Screensaver mode
-Detect terminal idle and auto-show after configurable timeout. Shell integration via zsh/bash hooks.
-
-### Phase 7: Distribution
-Publish to crates.io. Pre-built binaries for Linux/macOS. AUR package.
+- [ ] **User-defined scenes** — config format (TOML/YAML) so users can define their own scenes without writing Rust: custom art, entities, behaviors, and effects.
+- [ ] **Distribution** — publish to crates.io, pre-built binaries for Linux/macOS, AUR package.
 
 ## License
 
