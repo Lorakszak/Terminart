@@ -1,9 +1,6 @@
 mod art;
-#[allow(dead_code)]
 mod behavior;
 mod color;
-#[allow(dead_code)]
-mod effects;
 mod engine;
 mod entity;
 mod layer;

@@ -43,13 +43,6 @@ impl Layer {
         }
     }
 
-    /// Draw a multi-line string onto the layer at (x, y) with a uniform style.
-    /// Spaces are transparent. Trailing newlines stripped; leading preserved for alignment.
-    #[allow(dead_code)]
-    pub fn draw_ascii(&mut self, x: i32, y: i32, art: &str, style: Style) {
-        self.draw_ascii_styled(x, y, art, style, None);
-    }
-
     /// Draw a multi-line string with per-character coloring via an optional ColorMap.
     /// Characters not in the color map use the base_style.
     pub fn draw_ascii_styled(

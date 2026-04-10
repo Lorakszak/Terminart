@@ -147,11 +147,6 @@ pub fn lerp_rgb(a: Color, b: Color, t: f64) -> Color {
     }
 }
 
-/// Tint a color toward a target color by a given strength (0.0 to 1.0).
-pub fn tint_rgb(base: Color, tint: Color, strength: f64) -> Color {
-    lerp_rgb(base, tint, strength)
-}
-
 /// Fade (darken) a color by a factor. 0.0 = black, 1.0 = unchanged.
 pub fn fade_rgb(color: Color, factor: f64) -> Color {
     match color {

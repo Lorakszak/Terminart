@@ -1,5 +1,5 @@
-use rand::rngs::SmallRng;
 use rand::Rng;
+use rand::rngs::SmallRng;
 use ratatui::style::{Color, Style};
 
 use crate::layer::Layer;
@@ -72,17 +72,6 @@ impl Weather {
         Self::new(WeatherType::Clear, 0.0)
     }
 
-    pub fn set_type(&mut self, weather_type: WeatherType, intensity: f64) {
-        self.weather_type = weather_type;
-        self.intensity = intensity;
-        self.spawn_interval = Self::calc_interval(weather_type, intensity);
-        self.bolt = None;
-        self.strike_timer = 0.0;
-        if weather_type == WeatherType::Clear {
-            self.particles.clear();
-        }
-    }
-
     fn calc_interval(weather_type: WeatherType, intensity: f64) -> f64 {
         let base = intensity.max(0.1);
         match weather_type {
@@ -94,14 +83,7 @@ impl Weather {
         }
     }
 
-    pub fn tick(
-        &mut self,
-        dt: f64,
-        rng: &mut SmallRng,
-        width: u16,
-        height: u16,
-        wind_x: f64,
-    ) {
+    pub fn tick(&mut self, dt: f64, rng: &mut SmallRng, width: u16, height: u16, wind_x: f64) {
         if self.weather_type == WeatherType::Clear {
             return;
         }
@@ -176,13 +158,7 @@ impl Weather {
         Bolt { cells, age: 0.0 }
     }
 
-    fn spawn_particle(
-        &mut self,
-        rng: &mut SmallRng,
-        width: u16,
-        height: u16,
-        wind_x: f64,
-    ) {
+    fn spawn_particle(&mut self, rng: &mut SmallRng, width: u16, height: u16, wind_x: f64) {
         const RAIN_CHARS: &[char] = &['|', '/', '\\', ':'];
         const SNOW_CHARS: &[char] = &['*', '.', '+', 'o'];
         const FOG_CHARS: &[char] = &['~', '-', '.'];
@@ -288,9 +264,5 @@ impl Weather {
 
     pub fn weather_type(&self) -> WeatherType {
         self.weather_type
-    }
-
-    pub fn intensity(&self) -> f64 {
-        self.intensity
     }
 }

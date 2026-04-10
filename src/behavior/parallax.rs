@@ -29,19 +29,6 @@ impl Parallax {
         }
     }
 
-    /// No scrolling (static camera).
-    pub fn stationary() -> Self {
-        Self {
-            camera_x: 0.0,
-            camera_y: 0.0,
-            scroll_speed_x: 0.0,
-            scroll_speed_y: 0.0,
-            min_x: 0.0,
-            max_x: 0.0,
-            direction_x: 1.0,
-        }
-    }
-
     pub fn tick(&mut self, dt: f64) {
         if self.scroll_speed_x == 0.0 && self.scroll_speed_y == 0.0 {
             return;
@@ -64,18 +51,5 @@ impl Parallax {
     /// depth 0.0 = static background, 1.0 = moves with full camera speed.
     pub fn offset_x(&self, depth: f64) -> i32 {
         -(self.camera_x * depth) as i32
-    }
-
-    /// Y offset for a layer at the given depth.
-    pub fn offset_y(&self, depth: f64) -> i32 {
-        -(self.camera_y * depth) as i32
-    }
-
-    pub fn camera_x(&self) -> f64 {
-        self.camera_x
-    }
-
-    pub fn camera_y(&self) -> f64 {
-        self.camera_y
     }
 }

@@ -37,7 +37,7 @@ Behavior systems:
   Weather  - rain/snow/fog particle spawning
 
 Rendering:
-  Layer compositing (back-to-front, with parallax offsets) -> Buffer effects (glow, fade)
+  Layer compositing (back-to-front, with parallax offsets)
 ```
 
 - **Engine** - main loop: poll input, tick scene, render via ratatui, sleep. Takes a `SceneConfig` and passes it to `Scene::setup`.
@@ -45,8 +45,7 @@ Rendering:
 - **Art loader** (`art.rs`) - loads art from embedded defaults or user overrides, returns `ArtData`. `mirror_horizontal()` flips art for direction-aware entities.
 - **Layer** - 2D grid of optional styled cells, composited back-to-front. `composite_offset()` iterates the full layer dimensions (not screen-clamped) so wide parallax layers draw their off-screen content when panned into view.
 - **Entity** - position/velocity/frames/style + `tag: u32` (scene-defined type discriminator), `meta: f64` (per-entity scalar, e.g. cloud brightness bias), and `bob_amp/freq/phase` for sinusoidal vertical motion on top of `vy` drift.
-- **Color** (`color.rs`) - `ColorMap` enum (Palette/Grid), color math utilities (lerp, tint, fade), format parsers
-- **Effects** (`effects.rs`) - post-compositing buffer modifications (radial glow, vertical fade)
+- **Color** (`color.rs`) - `ColorMap` enum (Palette/Grid), color math utilities (`lerp_rgb`, `fade_rgb`), hex/palette/colormap parsers
 - **Behaviors** (`behavior/`) - wind, day/night, parallax, weather systems. Scenes opt-in by embedding and ticking them. `Weather` supports `Rain`, `Snow`, `Fog`, and `Thunder` (rain particles + periodic lightning bolts with sky flash).
 
 Scenes own their layers, entities, spawners, behavior system instances, and a cloned `SceneConfig`.
