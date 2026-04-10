@@ -71,6 +71,35 @@ cargo run -- --scene cityscape --fps 15 --cloud-rate 1.0 --plane-rate 1.0 --heli
 
 Press any key to exit.
 
+## Quality Gates
+Run these while iterating and before declaring any change done:
+```bash
+cargo check                     # fast type-check during iteration
+cargo clippy -- -D warnings     # lint, treat warnings as errors
+cargo fmt --check               # formatting check (use `cargo fmt` to apply)
+cargo test                      # run tests
+cargo build --release           # final build sanity-check
+```
+
+Pre-commit checklist (do not skip, do not `--no-verify`):
+- `cargo fmt` applied
+- `cargo clippy -- -D warnings` clean
+- `cargo test` passes
+- No stray `dbg!`, debug `println!`, or commented-out code
+- No new `unwrap()` or `panic!`/`todo!`/`unimplemented!` in merged code paths
+
+When iterating on a compiler/borrow-checker error, paste the full `rustc` output including the `E0xxx` code into the conversation rather than paraphrasing. Do not silence clippy warnings with `#[allow(...)]` unless the suppression is justified in a comment.
+
+## Rust Conventions
+- **No `unwrap()` in production paths.** Use `?` to propagate, or `.expect("why this invariant holds")` only when an invariant genuinely cannot fail. Same rule for `panic!`/`todo!`/`unimplemented!`.
+- **No `unsafe`** without a `// SAFETY:` comment spelling out the invariants the caller must uphold.
+- **Prefer borrowing** (`&T`, `&mut T`) over owning when the function does not need ownership. Call `.clone()` explicitly and only when actually necessary.
+- **Prefer iterators and combinators** (`map`/`filter`/`fold`/`enumerate`) over manual index loops.
+- **Prefer `if let` / `while let`** for single-pattern matches instead of full `match` blocks.
+- **No wildcard imports** (`use foo::*`) except `use super::*;` inside `#[cfg(test)]` modules.
+- **Naming:** `snake_case` for fns/vars/modules, `PascalCase` for types/traits, `SCREAMING_SNAKE_CASE` for consts. Rustfmt defaults (100-col) are authoritative, do not hand-reformat against them.
+- **Scope fixes narrowly.** When fixing a bug or a clippy warning, do not drive-by refactor unrelated code in the same change.
+
 ## Conventions
 - Each scene lives in `src/scenes/<name>/` with `mod.rs` + `art.rs`
 - New scenes implement the `Scene` trait
