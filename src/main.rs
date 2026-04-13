@@ -1,11 +1,11 @@
 mod art;
 mod behavior;
+mod cityscape;
 mod color;
 mod engine;
 mod entity;
 mod layer;
 mod scene;
-mod scenes;
 
 use clap::{Parser, ValueEnum};
 
@@ -18,14 +18,6 @@ use crate::scene::{CloudDirection, SceneConfig};
     about = "Animated ASCII cityscape for your terminal"
 )]
 struct Cli {
-    /// Scene to display
-    #[arg(short, long, value_enum, default_value_t = SceneName::Cityscape)]
-    scene: SceneName,
-
-    /// List available scenes
-    #[arg(short, long)]
-    list: bool,
-
     /// Target frames per second
     #[arg(long, default_value_t = 15)]
     fps: u32,
@@ -69,11 +61,6 @@ struct Cli {
     /// Starting hour of day (0.0..24.0)
     #[arg(long, default_value_t = 20.0)]
     start_time: f64,
-}
-
-#[derive(Copy, Clone, Debug, PartialEq, Eq, ValueEnum)]
-enum SceneName {
-    Cityscape,
 }
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, ValueEnum)]
@@ -148,14 +135,6 @@ fn validate(cli: &Cli) -> Result<(), String> {
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let cli = Cli::parse();
 
-    if cli.list {
-        println!("Available scenes:");
-        for scene in scenes::SCENES {
-            println!("  {:<12} - {}", scene.name, scene.description);
-        }
-        return Ok(());
-    }
-
     if let Err(msg) = validate(&cli) {
         eprintln!("error: {msg}");
         std::process::exit(2);
@@ -174,9 +153,5 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         start_time: cli.start_time,
     };
 
-    match cli.scene {
-        SceneName::Cityscape => engine::run::<scenes::cityscape::CityscapeScene>(cli.fps, cfg)?,
-    }
-
-    Ok(())
+    engine::run::<cityscape::CityscapeScene>(cli.fps, cfg)
 }

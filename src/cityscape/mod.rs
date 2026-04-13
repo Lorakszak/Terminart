@@ -97,37 +97,37 @@ impl CityscapeArt {
     fn load() -> Self {
         Self {
             clouds: vec![
-                crate::art::load("cityscape", "cloud_small", art::CLOUD_SMALL_DEFAULT),
-                crate::art::load("cityscape", "cloud_large", art::CLOUD_LARGE_DEFAULT),
-                crate::art::load("cityscape", "cloud_wispy", art::CLOUD_WISPY_DEFAULT),
-                crate::art::load("cityscape", "cloud_flat", art::CLOUD_FLAT_DEFAULT),
-                crate::art::load("cityscape", "cloud_tiny", art::CLOUD_TINY_DEFAULT),
+                crate::art::load("cloud_small", art::CLOUD_SMALL_DEFAULT),
+                crate::art::load("cloud_large", art::CLOUD_LARGE_DEFAULT),
+                crate::art::load("cloud_wispy", art::CLOUD_WISPY_DEFAULT),
+                crate::art::load("cloud_flat", art::CLOUD_FLAT_DEFAULT),
+                crate::art::load("cloud_tiny", art::CLOUD_TINY_DEFAULT),
             ],
             planes: vec![
                 PlaneArt {
-                    data: crate::art::load("cityscape", "plane", art::PLANE_DEFAULT),
+                    data: crate::art::load("plane", art::PLANE_DEFAULT),
                     faces_right: false,
                 },
                 PlaneArt {
-                    data: crate::art::load("cityscape", "plane2", art::PLANE2_DEFAULT),
+                    data: crate::art::load("plane2", art::PLANE2_DEFAULT),
                     faces_right: false,
                 },
                 PlaneArt {
-                    data: crate::art::load("cityscape", "plane3", art::PLANE3_DEFAULT),
+                    data: crate::art::load("plane3", art::PLANE3_DEFAULT),
                     faces_right: true,
                 },
             ],
             helis: vec![
-                crate::art::load("cityscape", "heli", art::HELI_DEFAULT),
-                crate::art::load("cityscape", "heli2", art::HELI2_DEFAULT),
+                crate::art::load("heli", art::HELI_DEFAULT),
+                crate::art::load("heli2", art::HELI2_DEFAULT),
             ],
-            bird: crate::art::load("cityscape", "bird", art::BIRD_DEFAULT),
+            bird: crate::art::load("bird", art::BIRD_DEFAULT),
             cars: vec![
-                crate::art::load("cityscape", "car_sedan", art::CAR_SEDAN_DEFAULT),
-                crate::art::load("cityscape", "car_truck", art::CAR_TRUCK_DEFAULT),
-                crate::art::load("cityscape", "car_sports", art::CAR_SPORTS_DEFAULT),
-                crate::art::load("cityscape", "car_taxi", art::CAR_TAXI_DEFAULT),
-                crate::art::load("cityscape", "car_van", art::CAR_VAN_DEFAULT),
+                crate::art::load("car_sedan", art::CAR_SEDAN_DEFAULT),
+                crate::art::load("car_truck", art::CAR_TRUCK_DEFAULT),
+                crate::art::load("car_sports", art::CAR_SPORTS_DEFAULT),
+                crate::art::load("car_taxi", art::CAR_TAXI_DEFAULT),
+                crate::art::load("car_van", art::CAR_VAN_DEFAULT),
             ],
         }
     }

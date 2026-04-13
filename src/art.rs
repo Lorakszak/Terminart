@@ -24,12 +24,12 @@ pub fn parse_frames(content: &str) -> Vec<String> {
         .collect()
 }
 
-/// Load art data for a scene asset.
-/// Checks ~/.config/terminart/scenes/ for user overrides (art, colors, colormap),
+/// Load art data for an asset.
+/// Checks `~/.config/asciicity/` for user overrides (art, colors, colormap),
 /// falls back to compiled-in defaults.
-pub fn load(scene: &str, name: &str, default_art: &str) -> ArtData {
+pub fn load(name: &str, default_art: &str) -> ArtData {
     // Load art frames
-    let frames = if let Some(content) = load_override_file(scene, name, "txt") {
+    let frames = if let Some(content) = load_override_file(name, "txt") {
         let f = parse_frames(&content);
         if f.is_empty() {
             parse_frames(default_art)
@@ -41,19 +41,17 @@ pub fn load(scene: &str, name: &str, default_art: &str) -> ArtData {
     };
 
     // Load colors: .colormap (positional) takes priority over .colors (char-based)
-    let colors = load_override_file(scene, name, "colormap")
+    let colors = load_override_file(name, "colormap")
         .and_then(|c| color::parse_colormap(&c))
-        .or_else(|| {
-            load_override_file(scene, name, "colors").and_then(|c| color::parse_palette(&c))
-        });
+        .or_else(|| load_override_file(name, "colors").and_then(|c| color::parse_palette(&c)));
 
     ArtData { frames, colors }
 }
 
 /// A safe path component is non-empty, contains no path separators, no NUL,
 /// is not a parent/current-directory alias, and is plain ASCII-ish. This is
-/// the last line of defence against a malicious scene/name looking up files
-/// outside `~/.config/terminart/scenes/`.
+/// the last line of defence against a malicious asset name looking up files
+/// outside `~/.config/asciicity/`.
 fn is_safe_component(s: &str) -> bool {
     if s.is_empty() || s.len() > 64 {
         return false;
@@ -65,14 +63,11 @@ fn is_safe_component(s: &str) -> bool {
         .any(|c| c == '/' || c == '\\' || c == '\0' || c == ':' || c.is_control())
 }
 
-fn load_override_file(scene: &str, name: &str, ext: &str) -> Option<String> {
-    if !is_safe_component(scene) || !is_safe_component(name) || !is_safe_component(ext) {
+fn load_override_file(name: &str, ext: &str) -> Option<String> {
+    if !is_safe_component(name) || !is_safe_component(ext) {
         return None;
     }
-    let path = config_dir()?
-        .join("scenes")
-        .join(scene)
-        .join(format!("{name}.{ext}"));
+    let path = config_dir()?.join(format!("{name}.{ext}"));
 
     // Cap the read at MAX_OVERRIDE_BYTES so a hostile or accidental huge file
     // cannot exhaust memory.
