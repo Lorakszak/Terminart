@@ -1,12 +1,31 @@
+<div align="center">
+
+<pre>
+  ·    *    ☾    ·    *
+▂▃▅▂▃▆▃▂▇▅▃▁▂▄▆▅▃▂▁▃▅▇▅▂
+</pre>
+
 # asciicity
 
-Animated ASCII cityscape for your terminal. A rooftop view of a city skyline with blinking windows, drifting clouds, traffic, planes, helicopters, birds, weather, and a day/night cycle.
+**Animated ASCII cityscape for your terminal.**
+
+A rooftop view of a city skyline with blinking windows, drifting clouds, traffic, planes, helicopters, birds, weather, and a day/night cycle.
+
+[![CI](https://github.com/Lorakszak/asciicity/actions/workflows/ci.yml/badge.svg)](https://github.com/Lorakszak/asciicity/actions/workflows/ci.yml)
+[![crates.io](https://img.shields.io/crates/v/asciicity.svg?logo=rust)](https://crates.io/crates/asciicity)
+[![Downloads](https://img.shields.io/crates/d/asciicity.svg)](https://crates.io/crates/asciicity)
+[![License: MIT](https://img.shields.io/crates/l/asciicity.svg)](LICENSE)
 
 ![asciicity default run](media/demo-default.gif)
 
-### Weather variants
+</div>
 
-#### Rain
+## Weather variants
+
+> [!TIP]
+> Run your terminal fullscreen for the best parallax depth. The wider the window, the more of the skyline scrolls past.
+
+### Rain
 
 ```bash
 asciicity --weather rain
@@ -14,7 +33,7 @@ asciicity --weather rain
 
 ![rain](media/demo-rain.gif)
 
-#### Snow
+### Snow
 
 ```bash
 asciicity --weather snow
@@ -22,7 +41,7 @@ asciicity --weather snow
 
 ![snow](media/demo-snow.gif)
 
-#### Fog
+### Fog
 
 ```bash
 asciicity --weather fog
@@ -30,7 +49,7 @@ asciicity --weather fog
 
 ![fog](media/demo-fog.gif)
 
-#### Thunder
+### Thunder
 
 ```bash
 asciicity --weather thunder
@@ -50,25 +69,15 @@ asciicity --weather thunder
 - External art files with user override support (`~/.config/asciicity/`)
 - Per-character colouring via `.colors` palette or `.colormap` positional grid
 - Lightweight: ~15 FPS default, minimal CPU usage
-- Press any key to exit
 
 ## Installation
 
-### From crates.io (recommended)
+### Pre-built binaries (recommended)
 
-Requires the [Rust toolchain](https://rustup.rs/). Works on any platform Rust supports.
+> [!NOTE]
+> No Rust toolchain required. Grab the archive, extract, run.
 
-```bash
-cargo install asciicity
-```
-
-This fetches the latest release from [crates.io](https://crates.io/crates/asciicity), builds it locally in release mode, and drops the binary in `~/.cargo/bin/asciicity` (which `rustup` puts on your `PATH`).
-
-### Pre-built binaries (no toolchain needed)
-
-Download the archive for your platform from the [latest release](https://github.com/Lorakszak/asciicity/releases/latest) and extract the `asciicity` binary to somewhere on your `PATH` (e.g. `~/.local/bin/`).
-
-Available targets:
+Download the archive for your platform from the [latest release](https://github.com/Lorakszak/asciicity/releases/latest) and drop the `asciicity` binary somewhere on your `PATH` (e.g. `~/.local/bin/`).
 
 | Platform | Archive |
 |---|---|
@@ -81,6 +90,16 @@ Each archive ships with a matching `.sha256` file. Verify before extracting:
 ```bash
 sha256sum -c asciicity-vX.Y.Z-x86_64-unknown-linux-gnu.tar.gz.sha256
 ```
+
+### From crates.io
+
+Requires the [Rust toolchain](https://rustup.rs/). Works on any platform Rust supports.
+
+```bash
+cargo install asciicity
+```
+
+This fetches the latest release from [crates.io](https://crates.io/crates/asciicity), builds it locally in release mode, and drops the binary in `~/.cargo/bin/asciicity` (which `rustup` puts on your `PATH`).
 
 ### From source
 
@@ -103,7 +122,8 @@ cargo uninstall asciicity   # remove
 asciicity
 ```
 
-Press any key to exit.
+> [!TIP]
+> Press any key to exit.
 
 ### Examples
 
@@ -137,7 +157,8 @@ asciicity --fps 15 --cloud-rate 1.0 --plane-rate 1.0 --heli-rate 1.0 \
           --weather-intensity 1.0 --time-speed 0.2 --start-time 20.0
 ```
 
-### All flags
+<details>
+<summary><strong>All flags</strong> (click to expand)</summary>
 
 | Flag | Default | Description |
 |---|---|---|
@@ -148,7 +169,7 @@ asciicity --fps 15 --cloud-rate 1.0 --plane-rate 1.0 --heli-rate 1.0 \
 | `--bird-rate <N>` | `1.0` | Bird flock spawn multiplier |
 | `--car-rate <N>` | `1.0` | Car spawn multiplier |
 | `--cloud-direction <DIR>` | `both` | Cloud drift direction: `left`, `right`, `both` |
-| `--weather <TYPE>` | | `clear`, `rain`, `snow`, `fog`, `thunder` |
+| `--weather <TYPE>` | `clear` | One of `clear`, `rain`, `snow`, `fog`, `thunder` |
 | `--weather-intensity <N>` | `1.0` | Weather intensity (0.1..3.0) |
 | `--time-speed <N>` | `0.2` | In-game hours per real second |
 | `--start-time <N>` | `20.0` | Starting hour of day (0..24) |
@@ -156,6 +177,8 @@ asciicity --fps 15 --cloud-rate 1.0 --plane-rate 1.0 --heli-rate 1.0 \
 | `-V, --version` | | Print version |
 
 Rate multipliers scale spawn intervals inversely: `2.0` is twice as often, `0.5` is half as often, `0.0` disables that entity entirely.
+
+</details>
 
 ### Auto-start with your terminal
 
