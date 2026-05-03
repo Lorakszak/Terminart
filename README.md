@@ -59,7 +59,7 @@ asciicity --weather thunder
 
 ## Features
 
-- Procedurally animated (never the same twice)
+- Procedurally animated
 - Layered rendering with transparent compositing and wide-world parallax scrolling
 - Day/night cycle with smooth sky colour transitions and stars that fade in at dusk
 - Weather: clear, rain, snow, fog, and full thunderstorms with lightning bolts and sky flashes
